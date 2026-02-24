@@ -1,46 +1,45 @@
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class UseCase2PalindromeCheckerApp {
 
-    // Method to check palindrome using Stack
+    // Method to check palindrome using Queue and Stack
     public static boolean isPalindrome(String input) {
 
-        // Create a stack of characters
+        // Create Stack and Queue
         Stack<Character> stack = new Stack<>();
+        Queue<Character> queue = new LinkedList<>();
 
-        // Push all characters into the stack
+        // Add characters to both Stack and Queue
         for (int i = 0; i < input.length(); i++) {
-            stack.push(input.charAt(i));
+            char ch = input.charAt(i);
+            stack.push(ch);      // LIFO
+            queue.add(ch);       // FIFO
         }
 
-        // Build reversed string using pop operation
-        String reversed = "";
-        while (!stack.isEmpty()) {
-            reversed = reversed + stack.pop();
+        // Compare dequeue (queue) with pop (stack)
+        while (!stack.isEmpty() && !queue.isEmpty()) {
+            if (!stack.pop().equals(queue.remove())) {
+                return false;
+            }
         }
 
-        // Compare original and reversed string
-        if (input.equals(reversed)) {
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     }
 
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("=== Stack Based Palindrome Checker ===");
+        System.out.println("=== Queue + Stack Based Palindrome Checker ===");
         System.out.print("Enter a string: ");
 
         String userInput = scanner.nextLine();
 
-        // Check palindrome
         boolean result = isPalindrome(userInput);
 
-        // Print result
         if (result) {
             System.out.println("The given string is a Palindrome.");
         } else {
