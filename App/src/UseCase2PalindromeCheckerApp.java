@@ -1,19 +1,17 @@
 import java.util.Scanner;
 import java.util.Stack;
 
-// PalindromeChecker class encapsulates the palindrome logic
-class UseCase2PalindromeCheckerApp {
+public class UseCase2PalindromeCheckerApp {
 
     // Method to check palindrome using Stack
-    public boolean checkPalindrome(String input) {
-
+    public static boolean isPalindrome(String input) {
         if (input == null || input.isEmpty()) {
             return true;
         }
 
         Stack<Character> stack = new Stack<>();
 
-        // Push all characters to stack
+        // Push all characters to the stack
         for (int i = 0; i < input.length(); i++) {
             stack.push(input.charAt(i));
         }
@@ -27,21 +25,15 @@ class UseCase2PalindromeCheckerApp {
 
         return true;
     }
-}
-
-// Main application class
-public class UseCase11PalindromeCheckerApp {
 
     public static void main(String[] args) {
-
         Scanner scanner = new Scanner(System.in);
-        PalindromeChecker checker = new PalindromeChecker();
 
-        System.out.println("=== Object-Oriented Palindrome Service ===");
+        System.out.println("=== UseCase2: Palindrome Checker ===");
         System.out.print("Enter a string: ");
         String userInput = scanner.nextLine();
 
-        boolean result = checker.checkPalindrome(userInput);
+        boolean result = isPalindrome(userInput);
 
         if (result) {
             System.out.println("The given string is a Palindrome.");
