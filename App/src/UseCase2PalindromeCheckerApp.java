@@ -1,38 +1,82 @@
 import java.util.Scanner;
-import java.util.Deque;
-import java.util.LinkedList;
 
 public class UseCase2PalindromeCheckerApp {
 
-    // Method to check palindrome using Deque
+    // Node class for Singly Linked List
+    static class Node {
+        char data;
+        Node next;
+
+        Node(char data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    // Method to check palindrome using Linked List
     public static boolean isPalindrome(String input) {
 
-        // Create Deque
-        Deque<Character> deque = new LinkedList<>();
-
-        // Insert characters into deque
-        for (int i = 0; i < input.length(); i++) {
-            deque.addLast(input.charAt(i));
+        if (input == null || input.length() == 0) {
+            return true;
         }
 
-        // Compare front and rear characters
-        while (deque.size() > 1) {
-            char front = deque.removeFirst();
-            char rear = deque.removeLast();
+        // Step 1: Convert String to Linked List
+        Node head = new Node(input.charAt(0));
+        Node current = head;
 
-            if (front != rear) {
+        for (int i = 1; i < input.length(); i++) {
+            current.next = new Node(input.charAt(i));
+            current = current.next;
+        }
+
+        // Step 2: Find middle using Fast & Slow pointers
+        Node slow = head;
+        Node fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Step 3: Reverse second half
+        Node secondHalf = reverseList(slow);
+
+        // Step 4: Compare first half and reversed second half
+        Node firstHalf = head;
+        Node tempSecond = secondHalf;
+
+        while (tempSecond != null) {
+            if (firstHalf.data != tempSecond.data) {
                 return false;
             }
+            firstHalf = firstHalf.next;
+            tempSecond = tempSecond.next;
         }
 
         return true;
+    }
+
+    // Method to reverse linked list
+    private static Node reverseList(Node head) {
+        Node prev = null;
+        Node current = head;
+        Node next = null;
+
+        while (current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+
+        return prev;
     }
 
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("=== Deque Based Optimized Palindrome Checker ===");
+        System.out.println("=== Linked List Based Palindrome Checker ===");
         System.out.print("Enter a string: ");
 
         String userInput = scanner.nextLine();
