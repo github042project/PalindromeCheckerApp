@@ -1,38 +1,47 @@
 import java.util.Scanner;
+import java.util.Stack;
 
-public class UseCase2PalindromeCheckerApp {
+// PalindromeChecker class encapsulates the palindrome logic
+class UseCase2PalindromeCheckerApp {
 
-    // Method to normalize string and check palindrome
-    public static boolean isPalindrome(String input) {
+    // Method to check palindrome using Stack
+    public boolean checkPalindrome(String input) {
 
-        // Step 1: Normalize string (remove spaces, make lowercase)
-        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+        if (input == null || input.isEmpty()) {
+            return true;
+        }
 
-        // Step 2: Check palindrome using two-pointer technique
-        int start = 0;
-        int end = normalized.length() - 1;
+        Stack<Character> stack = new Stack<>();
 
-        while (start < end) {
-            if (normalized.charAt(start) != normalized.charAt(end)) {
+        // Push all characters to stack
+        for (int i = 0; i < input.length(); i++) {
+            stack.push(input.charAt(i));
+        }
+
+        // Compare characters while popping
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) != stack.pop()) {
                 return false;
             }
-            start++;
-            end--;
         }
 
         return true;
     }
+}
+
+// Main application class
+public class UseCase11PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
+        PalindromeChecker checker = new PalindromeChecker();
 
-        System.out.println("=== Case-Insensitive & Space-Ignored Palindrome Checker ===");
+        System.out.println("=== Object-Oriented Palindrome Service ===");
         System.out.print("Enter a string: ");
-
         String userInput = scanner.nextLine();
 
-        boolean result = isPalindrome(userInput);
+        boolean result = checker.checkPalindrome(userInput);
 
         if (result) {
             System.out.println("The given string is a Palindrome.");
