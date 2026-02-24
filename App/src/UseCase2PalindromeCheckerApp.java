@@ -1,27 +1,26 @@
 import java.util.Scanner;
-import java.util.Stack;
-import java.util.Queue;
+import java.util.Deque;
 import java.util.LinkedList;
 
 public class UseCase2PalindromeCheckerApp {
 
-    // Method to check palindrome using Queue and Stack
+    // Method to check palindrome using Deque
     public static boolean isPalindrome(String input) {
 
-        // Create Stack and Queue
-        Stack<Character> stack = new Stack<>();
-        Queue<Character> queue = new LinkedList<>();
+        // Create Deque
+        Deque<Character> deque = new LinkedList<>();
 
-        // Add characters to both Stack and Queue
+        // Insert characters into deque
         for (int i = 0; i < input.length(); i++) {
-            char ch = input.charAt(i);
-            stack.push(ch);      // LIFO
-            queue.add(ch);       // FIFO
+            deque.addLast(input.charAt(i));
         }
 
-        // Compare dequeue (queue) with pop (stack)
-        while (!stack.isEmpty() && !queue.isEmpty()) {
-            if (!stack.pop().equals(queue.remove())) {
+        // Compare front and rear characters
+        while (deque.size() > 1) {
+            char front = deque.removeFirst();
+            char rear = deque.removeLast();
+
+            if (front != rear) {
                 return false;
             }
         }
@@ -33,7 +32,7 @@ public class UseCase2PalindromeCheckerApp {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("=== Queue + Stack Based Palindrome Checker ===");
+        System.out.println("=== Deque Based Optimized Palindrome Checker ===");
         System.out.print("Enter a string: ");
 
         String userInput = scanner.nextLine();
